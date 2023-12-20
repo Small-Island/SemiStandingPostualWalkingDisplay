@@ -14,6 +14,8 @@ public class Main : MonoBehaviour
     // public Epos4Lift epos4Seat;
     public WalkingDisplayMain walkingDisplayMain;
     public UnityEngine.Video.VideoPlayer videoPlayer;
+    [SerializeField, UnityEngine.Header("Unit s")]
+    private float walkDelayTime = 0f;
 
     private bool button_play_disabled = false;
     public bool get_button_play_disabled() {
@@ -43,12 +45,13 @@ public class Main : MonoBehaviour
         this.main_stop();
     }
 
-    private void main_play() {
+    private async void main_play() {
         this.status = Controller.play;
         // if (videoPlayer) {
             videoPlayer.Play();
         // }
         // yield return new UnityEngine.WaitForSeconds(1.0f);
+        await System.Threading.Tasks.Task.Delay((int)(1000*this.walkDelayTime));
         // if (walkingDisplayMain) {
             walkingDisplayMain.WalkStraight();
         // }
@@ -123,7 +126,7 @@ public class Main : MonoBehaviour
             if (this.thumbStick.y < -0.9 && !thumbStickFlag) {
                 thumbStickFlag = true;
                 // lowerLimbMotorSerial.decrementalHallfTime();
-                button_play();
+                button_stop();
             }
         }
         if (System.Math.Abs(this.thumbStick.y) < 0.1) {
