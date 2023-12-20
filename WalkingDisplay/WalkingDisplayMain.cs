@@ -30,10 +30,10 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
     }
 
     [UnityEngine.SerializeField] private Epos4Main epos4Main;
-    private enum Status {
+    public enum Status {
         stop, walking
     }
-    [UnityEngine.SerializeField, ReadOnly] private Status status;
+    [UnityEngine.SerializeField, ReadOnly] public Status status;
 
     private float halfPeriod = 0;
     private float quaterPeriod = 0;
@@ -80,34 +80,24 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
         public static System.Threading.Thread rightSlider = null;
 
         public static void start(WalkingDisplayMain arg_walkMain) {
-            if (LegThreads.lifter == null && arg_walkMain.activate.lifter) {
-                LegThreads.lifter = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightLifterAsync));
-            }
-            if (LegThreads.leftPedal == null && arg_walkMain.activate.leftPedal) {
-                LegThreads.leftPedal = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightLeftPedalAsync));
-            }
-            if (LegThreads.leftSlider == null && arg_walkMain.activate.leftSlider) {
-                LegThreads.leftSlider = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightLeftSliderAsync));
-            }
-            if (LegThreads.rightPedal == null && arg_walkMain.activate.rightPedal) {
-                LegThreads.rightPedal = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightRightPedalAsync));
-            }
-            if (LegThreads.rightSlider == null && arg_walkMain.activate.rightSlider) {
-                LegThreads.rightSlider = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightRightSliderAsync));
-            }
             if (arg_walkMain.activate.lifter) {
+                LegThreads.lifter = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightLifterAsync));
                 LegThreads.lifter.Start();
             }
             if (arg_walkMain.activate.leftPedal) {
+                LegThreads.leftPedal = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightLeftPedalAsync));
                 LegThreads.leftPedal.Start();
             }
             if (arg_walkMain.activate.leftSlider) {
+                LegThreads.leftSlider = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightLeftSliderAsync));
                 LegThreads.leftSlider.Start();
             }
             if (arg_walkMain.activate.rightPedal) {
+                LegThreads.rightPedal = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightRightPedalAsync));
                 LegThreads.rightPedal.Start();
             }
             if (arg_walkMain.activate.rightSlider) {
+                LegThreads.rightSlider = new System.Threading.Thread(new System.Threading.ThreadStart(arg_walkMain.WalkStraightRightSliderAsync));
                 LegThreads.rightSlider.Start();
             }
         }
@@ -145,8 +135,9 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
         return;
     }
 
-    public void WalkStraight()
+    public void WalkStraight(float incdec_time)
     {
+        this.period = this.period + incdec_time;
         epos4Main.AllNodeDefinePosition();
         this.setPeriod();
         LegThreads.start(this);

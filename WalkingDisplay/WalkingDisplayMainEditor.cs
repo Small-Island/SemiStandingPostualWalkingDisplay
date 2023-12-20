@@ -11,7 +11,7 @@ public class WalkingDisplayMainEditor : Editor
 
         if (GUILayout.Button("Walk Straight"))
         {
-            walkingDisplayMain.WalkStraight();
+            walkingDisplayMain.WalkStraight(0);
         }
 
         if (GUILayout.Button("Walk Stop"))
