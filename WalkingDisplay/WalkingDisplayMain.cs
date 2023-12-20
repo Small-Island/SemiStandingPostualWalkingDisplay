@@ -200,6 +200,7 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
         while (true) {
             this.status = Status.walking;
             this.setPeriod();
+            // OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
             System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
             System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
             epos4Main.rightSlider.MoveToPositionInTime(-this.amptitude.slider, this.halfPeriod);
