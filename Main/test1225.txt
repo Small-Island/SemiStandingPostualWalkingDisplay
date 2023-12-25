@@ -1,2 +1,0 @@
-goto nomal speed no audio period 0.66 audo period 0.41
-kawaguchi nomal speed no audio period 0.75 audo period 0.50

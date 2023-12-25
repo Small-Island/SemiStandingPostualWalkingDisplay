@@ -1,0 +1,30 @@
+[
+    {
+        "name": "goto",
+        "speed": "nomal speed",
+        "case": [
+            {
+                "audio": false,
+                "period": 0.66
+            },
+            {
+                "audio": true,
+                "period": 0.41
+            }
+        ]
+    },
+    {
+        "name": "kawaguchi",
+        "speed": "nomal speed",
+        "case": [
+            {
+                "audio": false,
+                "period": 0.75
+            },
+            {
+                "audio": true,
+                "period": 0.50
+            }
+        ]
+    }
+]
