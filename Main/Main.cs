@@ -127,16 +127,18 @@ public class Main : MonoBehaviour
             if (this.thumbStick.y > 0.9 && !thumbStickFlag) {
                 thumbStickFlag = true;
                 // lowerLimbMotorSerial.incrementalHallfTime();
-                this.incdec_time = -0.05f;
-                this.walkingDisplayMain.period += this.incdec_time;
+                // this.incdec_time = -0.05f;
+                // this.walkingDisplayMain.period += this.incdec_time;
+                this.walkingDisplayMain.amptitude.slider += 1;
                 // button_stop();
                 // button_play();
             }
             if (this.thumbStick.y < -0.9 && !thumbStickFlag) {
                 thumbStickFlag = true;
                 // lowerLimbMotorSerial.decrementalHallfTime();
-                this.incdec_time = 0.05f;
-                this.walkingDisplayMain.period += this.incdec_time;
+                // this.incdec_time = 0.05f;
+                // this.walkingDisplayMain.period += this.incdec_time;
+                this.walkingDisplayMain.amptitude.slider -= 1;
                 // button_stop();
                 // button_play();
             }

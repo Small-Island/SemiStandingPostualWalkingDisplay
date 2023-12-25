@@ -19,10 +19,10 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
     }
 
     [UnityEngine.Header("Unit mm")]
-    [UnityEngine.SerializeField] private Amptitude amptitude;
+    [UnityEngine.SerializeField] public Amptitude amptitude;
 
     [System.Serializable]
-    private class Amptitude {
+    public class Amptitude {
         // Unit mm
         [UnityEngine.SerializeField, Range(0, 10)] public double lift = 1;
         [UnityEngine.SerializeField, Range(0, 20)] public double pedal = 1;
