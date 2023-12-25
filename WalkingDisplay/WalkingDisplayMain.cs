@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
-    [UnityEngine.SerializeField, Range(0.38f, 1.4f)] private float period = 1.4f;
+    [UnityEngine.SerializeField, Range(0.38f, 1.4f)] public float period = 1.4f;
     // [UnityEngine.SerializeField] private UnityEngine.AddressableAssets.AssetReference csvFile;
 
     [UnityEngine.SerializeField] private Activate activate;

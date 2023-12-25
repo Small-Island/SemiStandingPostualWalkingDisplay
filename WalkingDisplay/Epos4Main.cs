@@ -10,9 +10,13 @@ public class Epos4Main : UnityEngine.MonoBehaviour {
     [UnityEngine.SerializeField]
     public Epos4Node lifter, leftPedal, leftSlider, rightPedal, rightSlider;
 
-    private UnityEngine.Coroutine coroutineActualPosition = null;
+    // private UnityEngine.Coroutine coroutineActualPosition = null;
 
-    private UnityEngine.WaitForSeconds waitForSeconds;
+    // private UnityEngine.WaitForSeconds waitForSeconds;
+
+    private System.Threading.Thread th = null;
+
+    private bool Destroied = false;
 
     void Start() {
         EposCmd.Net.DeviceManager connector = null;
@@ -31,8 +35,10 @@ public class Epos4Main : UnityEngine.MonoBehaviour {
         this.rightPedal.MotorInit();
         this.rightSlider = new Epos4Node(connector, 5, "Right Slider", 12);
         this.rightSlider.MotorInit();
-        this.waitForSeconds = new UnityEngine.WaitForSeconds(0.1f);
-        this.coroutineActualPosition = StartCoroutine(this.getActualPositionAsync());
+        // this.waitForSeconds = new UnityEngine.WaitForSeconds(0.1f);
+        // this.coroutineActualPosition = StartCoroutine(this.getActualPositionAsync());
+        this.th = new System.Threading.Thread(new System.Threading.ThreadStart(this.getActualPositionAsync));
+        this.th.Start();
     }
 
     public void clearError() {
@@ -43,24 +49,30 @@ public class Epos4Main : UnityEngine.MonoBehaviour {
         catch (EposCmd.Net.DeviceException) {
         }
         this.lifter      = new Epos4Node(connector, 1, "Lifter",       2);
+        this.lifter.MotorInit();
         this.leftPedal   = new Epos4Node(connector, 2, "Left Pedal",   6);
+        this.leftPedal.MotorInit();
         this.leftSlider  = new Epos4Node(connector, 3, "Left Slider",  12);
+        this.leftSlider.MotorInit();
         this.rightPedal  = new Epos4Node(connector, 4, "Right Pedal",  6);
+        this.rightPedal.MotorInit();
         this.rightSlider = new Epos4Node(connector, 5, "Right Slider", 12);
+        this.rightSlider.MotorInit();
     }
 
     // void Update() {
     // }
 
-    private System.Collections.IEnumerator getActualPositionAsync() {
-        while (true) {
+    private void getActualPositionAsync() {
+        while (!this.Destroied) {
             this.lifter.actualPosition      = this.lifter.getPositionIs();
             this.leftPedal.actualPosition   = this.leftPedal.getPositionIs();
             this.leftSlider.actualPosition  = this.leftSlider.getPositionIs();
             this.rightPedal.actualPosition  = this.rightPedal.getPositionIs();
             this.rightSlider.actualPosition = this.rightSlider.getPositionIs();
-            yield return this.waitForSeconds;
+            System.Threading.Thread.Sleep(10);
         }
+        return;
     }
 
     public void AllNodeMoveToHome()
@@ -79,5 +91,11 @@ public class Epos4Main : UnityEngine.MonoBehaviour {
         this.leftSlider.definePosition();
         this.rightPedal.definePosition();
         this.rightSlider.definePosition();
+    }
+
+    private void OnDestroy()
+    {
+        this.Destroied = true;
+        this.th.Abort();
     }
 }

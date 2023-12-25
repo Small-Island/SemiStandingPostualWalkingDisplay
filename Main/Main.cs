@@ -54,7 +54,7 @@ public class Main : MonoBehaviour
         // yield return new UnityEngine.WaitForSeconds(1.0f);
         await System.Threading.Tasks.Task.Delay((int)(1000*this.walkDelayTime));
         // if (walkingDisplayMain) {
-            walkingDisplayMain.WalkStraight(incdec_time);
+            walkingDisplayMain.WalkStraight(this.incdec_time);
         // }
         // yield return new UnityEngine.WaitForSeconds(0.1f);
         // if (epos4Seat) {
@@ -118,34 +118,47 @@ public class Main : MonoBehaviour
 
     private bool thumbStickFlag = false;
     private bool abuttonFlag = false;
+    private bool bbuttonFlag = false;
     void Update() {
         this.thumbStick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch);
         bool abutton = OVRInput.Get(OVRInput.Button.One);
+        bool bbutton = OVRInput.Get(OVRInput.Button.Two);
         if (!this.button_play_disabled) {
             if (this.thumbStick.y > 0.9 && !thumbStickFlag) {
                 thumbStickFlag = true;
                 // lowerLimbMotorSerial.incrementalHallfTime();
                 this.incdec_time = -0.05f;
-                button_stop();
-                button_play();
+                this.walkingDisplayMain.period += this.incdec_time;
+                // button_stop();
+                // button_play();
             }
             if (this.thumbStick.y < -0.9 && !thumbStickFlag) {
                 thumbStickFlag = true;
                 // lowerLimbMotorSerial.decrementalHallfTime();
                 this.incdec_time = 0.05f;
-                button_stop();
-                button_play();
+                this.walkingDisplayMain.period += this.incdec_time;
+                // button_stop();
+                // button_play();
             }
         }
         if (System.Math.Abs(this.thumbStick.y) < 0.1 && this.walkingDisplayMain.status == WalkingDisplayMain.Status.walking) {
-            thumbStickFlag = false;
+            this.thumbStickFlag = false;
         }
-        if (abutton & !abuttonFlag) {
-            abuttonFlag = true;
-            button_stop();
+        if (abutton & !this.abuttonFlag) {
+            this.abuttonFlag = true;
+            this.button_stop();
         }
         if (!abutton) {
-            abuttonFlag = false;
+            this.abuttonFlag = false;
+        }
+        if (bbutton & !this.bbuttonFlag) {
+            this.bbuttonFlag = true;
+            if (this.status != Controller.play) {
+                this.button_play();
+            }
+        }
+        if (!bbutton) {
+            this.bbuttonFlag = false;
         }
     }
 }
