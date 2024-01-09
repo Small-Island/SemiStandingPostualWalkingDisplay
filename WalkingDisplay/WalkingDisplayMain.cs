@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
     [UnityEngine.SerializeField, Range(0.38f, 1.4f)] public float period = 1.4f;
+    [UnityEngine.SerializeField, Range(1, 10)] public int forwardRate = 4;
+    [UnityEngine.SerializeField, Range(1, 10)] public int backwardRate = 6;
     // [UnityEngine.SerializeField] private UnityEngine.AddressableAssets.AssetReference csvFile;
 
     [UnityEngine.SerializeField] private Activate activate;
@@ -37,6 +39,8 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
 
     private float halfPeriod = 0;
     private float quaterPeriod = 0;
+    private float forwardPeriod = 0;
+    private float backwardPeriod = 0;
 
     private UnityEngine.WaitForSeconds waitForQuaterPeriod;
     
@@ -130,8 +134,10 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
     }
 
     private void setPeriod() {
-        this.quaterPeriod = this.period/4.0f;
-        this.halfPeriod = this.period/2.0f;
+        this.quaterPeriod   = this.period/4.0f;
+        this.halfPeriod     = this.period/2.0f;
+        this.forwardPeriod  = (float)this.forwardRate/(float)(this.forwardRate + this.backwardRate)*this.period;
+        this.backwardPeriod = (float)this.backwardRate/(float)(this.forwardRate + this.backwardRate)*this.period;
         return;
     }
 
@@ -174,12 +180,16 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
         while (true) {
             this.status = Status.walking;
             this.setPeriod();
-            epos4Main.leftSlider.MoveToPositionInTime(-this.amptitude.slider, this.halfPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            epos4Main.leftSlider.MoveToPositionInTime(this.amptitude.slider, this.halfPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            epos4Main.leftSlider.MoveToPositionInTime(-this.amptitude.slider, this.forwardPeriod);
+            System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod));
+            epos4Main.leftSlider.MoveToPositionInTime(this.amptitude.slider, this.backwardPeriod);
+            System.Threading.Thread.Sleep((int)(1000*this.backwardPeriod));
+            // epos4Main.leftSlider.MoveToPositionInTime(-this.amptitude.slider, this.halfPeriod);
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // epos4Main.leftSlider.MoveToPositionInTime(this.amptitude.slider, this.halfPeriod);
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
         }
     }
 
@@ -197,16 +207,22 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
     }
 
     private void WalkStraightRightSliderAsync() {
+        this.setPeriod();
+        System.Threading.Thread.Sleep((int)(1000*this.halfPeriod));
         while (true) {
             this.status = Status.walking;
             this.setPeriod();
+            epos4Main.rightSlider.MoveToPositionInTime(-this.amptitude.slider, this.forwardPeriod);
+            System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod));
+            epos4Main.rightSlider.MoveToPositionInTime(this.amptitude.slider, this.backwardPeriod);
+            System.Threading.Thread.Sleep((int)(1000*this.backwardPeriod));
             // OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            epos4Main.rightSlider.MoveToPositionInTime(-this.amptitude.slider, this.halfPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            epos4Main.rightSlider.MoveToPositionInTime(this.amptitude.slider, this.halfPeriod);
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // epos4Main.rightSlider.MoveToPositionInTime(-this.amptitude.slider, this.halfPeriod);
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // epos4Main.rightSlider.MoveToPositionInTime(this.amptitude.slider, this.halfPeriod);
         }
     }
 
