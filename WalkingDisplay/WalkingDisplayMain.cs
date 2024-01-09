@@ -150,16 +150,15 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
     }
 
     private void WalkStraightLifterAsync() {
-        while (true) {
-            this.status = Status.walking;
-            this.setPeriod();
-            epos4Main.lifter.MoveToPositionInTime(-this.amptitude.lift, this.quaterPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            // System.Threading.Tasks.Task.Delay((int)(1000*this.quaterPeriod));
-            epos4Main.lifter.MoveToPositionInTime(0, this.quaterPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            // System.Threading.Tasks.Task.Delay((int)(1000*this.quaterPeriod));
-        }
+        // while (true) {
+        //     this.status = Status.walking;
+        //     this.setPeriod();
+        //     epos4Main.lifter.MoveToPositionInTime(-this.amptitude.lift, this.forwardPeriod*0.5);
+        //     System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
+        //     epos4Main.lifter.MoveToPositionInTime(0, this.forwardPeriod*0.5);
+        //     System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
+        //     System.Threading.Thread.Sleep((int)(1000*System.Math.Abs(this.halfPeriod - this.forwardPeriod)));
+        // }
     }
 
     private void WalkStraightLeftPedalAsync() {
@@ -167,8 +166,10 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
             this.status = Status.walking;
             this.setPeriod();
             epos4Main.leftPedal.MoveToPositionInTime(this.amptitude.pedal, this.forwardPeriod*0.5);
+            epos4Main.lifter.MoveToPositionInTime(-this.amptitude.lift, this.forwardPeriod*0.5);
             System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
             epos4Main.leftPedal.MoveToPositionInTime(0, this.forwardPeriod*0.5);
+            epos4Main.lifter.MoveToPositionInTime(0, this.forwardPeriod*0.5);
             System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
             System.Threading.Thread.Sleep((int)(1000*this.backwardPeriod));
 
@@ -206,8 +207,10 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
             this.status = Status.walking;
             this.setPeriod();
             epos4Main.rightPedal.MoveToPositionInTime(this.amptitude.pedal, this.forwardPeriod*0.5);
+            epos4Main.lifter.MoveToPositionInTime(-this.amptitude.lift, this.forwardPeriod*0.5);
             System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
             epos4Main.rightPedal.MoveToPositionInTime(0, this.forwardPeriod*0.5);
+            epos4Main.lifter.MoveToPositionInTime(0, this.forwardPeriod*0.5);
             System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
             System.Threading.Thread.Sleep((int)(1000*this.backwardPeriod));
 
