@@ -166,12 +166,18 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
         while (true) {
             this.status = Status.walking;
             this.setPeriod();
-            epos4Main.leftPedal.MoveToPositionInTime(this.amptitude.pedal, this.quaterPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            epos4Main.leftPedal.MoveToPositionInTime(0, this.quaterPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            epos4Main.leftPedal.MoveToPositionInTime(this.amptitude.pedal, this.forwardPeriod*0.5);
+            System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
+            epos4Main.leftPedal.MoveToPositionInTime(0, this.forwardPeriod*0.5);
+            System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
+            System.Threading.Thread.Sleep((int)(1000*this.backwardPeriod));
+
+            // epos4Main.leftPedal.MoveToPositionInTime(this.amptitude.pedal, this.quaterPeriod);
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // epos4Main.leftPedal.MoveToPositionInTime(0, this.quaterPeriod);
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
         }
     }
 
@@ -194,15 +200,23 @@ public class WalkingDisplayMain : UnityEngine.MonoBehaviour {
     }
 
     private void WalkStraightRightPedalAsync() {
+        this.setPeriod();
+        System.Threading.Thread.Sleep((int)(1000*this.halfPeriod));
         while (true) {
             this.status = Status.walking;
             this.setPeriod();
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod)); //
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod)); //
-            epos4Main.rightPedal.MoveToPositionInTime(this.amptitude.pedal, this.quaterPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
-            epos4Main.rightPedal.MoveToPositionInTime(0, this.quaterPeriod);
-            System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            epos4Main.rightPedal.MoveToPositionInTime(this.amptitude.pedal, this.forwardPeriod*0.5);
+            System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
+            epos4Main.rightPedal.MoveToPositionInTime(0, this.forwardPeriod*0.5);
+            System.Threading.Thread.Sleep((int)(1000*this.forwardPeriod*0.5));
+            System.Threading.Thread.Sleep((int)(1000*this.backwardPeriod));
+
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // epos4Main.rightPedal.MoveToPositionInTime(this.amptitude.pedal, this.quaterPeriod);
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
+            // epos4Main.rightPedal.MoveToPositionInTime(0, this.quaterPeriod);
+            // System.Threading.Thread.Sleep((int)(1000*this.quaterPeriod));
         }
     }
 
